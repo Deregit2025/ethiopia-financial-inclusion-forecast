@@ -1,0 +1,36 @@
+
+---
+
+## 🧾 .gitignore (Python + Data Science)
+
+```gitignore
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.env
+.venv
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data
+data/processed/*.csv
+!data/raw/*.csv
+data/
+
+# Streamlit
+.streamlit/
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
