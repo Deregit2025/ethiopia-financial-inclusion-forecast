@@ -1,0 +1,52 @@
+name: EDA CI
+
+on:
+  push:
+    branches:
+      - main
+      - task-1
+      - task-2
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  run-eda:
+    name: Run Task 2 EDA Notebook
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy matplotlib seaborn jupyter nbconvert openpyxl
+
+      # Run the EDA notebook
+      - name: Execute eda.ipynb
+        run: |
+          jupyter nbconvert --to notebook --execute notebooks/eda.ipynb --output notebooks/eda_executed.ipynb --ExecutePreprocessor.timeout=600
+
+      # Optional: Convert to HTML for review
+      - name: Convert EDA notebook to HTML
+        run: |
+          jupyter nbconvert --to html notebooks/eda_executed.ipynb --output notebooks/eda_report.html
+
+      # Upload HTML report as artifact
+      - name: Upload EDA report
+        uses: actions/upload-artifact@v3
+        with:
+          name: eda-report
+          path: notebooks/eda_report.html
