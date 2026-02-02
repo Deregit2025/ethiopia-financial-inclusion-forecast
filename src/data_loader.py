@@ -7,10 +7,12 @@ def load_raw_data(path="../data/raw/ethiopia_fi_unified_data.xlsx"):
     Returns a tuple: (observations/events/targets df, impact_links df)
     """
     # Load main sheet
-    data_df = pd.read_excel(path, sheet_name='ethiopia_fi_unified_data')
+    main_file = "../data/raw/ethiopia_fi_unified_data.csv"
+    impact_file = "../data/raw/Impact_sheet.csv"
+    data_df = pd.read_csv(main_file)
     
     # Load impact_links sheet
-    impact_df = pd.read_excel(path, sheet_name='Impact_sheet')
+    impact_df = pd.read_csv(impact_file)
     
     # Convert observation_date to datetime
     if 'observation_date' in data_df.columns:
